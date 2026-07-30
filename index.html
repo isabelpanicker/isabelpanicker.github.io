@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- EDIT: page title shown in the browser tab and search results -->
+<title>Your Name — Research Portfolio</title>
+<meta name="description" content="Research portfolio: soft matter, complex fluids, and liquid-phase electron microscopy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F7F5;
+    --ink:#16191C;
+    --ink-soft:#586058;
+    --accent:#147D77;
+    --hairline:#D8DCD6;
+    --display:"Space Grotesk",sans-serif;
+    --body:"Source Serif 4",Georgia,serif;
+    --mono:"JetBrains Mono",monospace;
+    --measure:70ch;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:18px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline;text-underline-offset:3px}
+  a:focus-visible,button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,5vw,4rem)}
+
+  /* ---- shared section grid: mono rail + content ---- */
+  .row{
+    display:grid;
+    grid-template-columns:9rem 1fr;
+    gap:2rem;
+    padding:clamp(3rem,7vw,5.5rem) 0;
+    border-top:1px solid var(--hairline);
+  }
+  .rail{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-top:.5rem;
+  }
+  .rail .idx{color:var(--accent)}
+  .body-col{max-width:var(--measure)}
+
+  /* ---- hero ---- */
+  .hero{position:relative;overflow:hidden}
+  .hero-inner{
+    padding:clamp(4rem,12vw,8rem) 0 clamp(3rem,7vw,5rem);
+    position:relative;
+    z-index:2;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.75rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:1.25rem;
+  }
+  h1{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(2.9rem,8vw,5.6rem);
+    line-height:1.02;
+    letter-spacing:-.02em;
+  }
+  .tagline{
+    font-family:var(--body);
+    font-size:clamp(1.1rem,2.4vw,1.4rem);
+    color:var(--ink-soft);
+    margin-top:1.5rem;
+    max-width:44ch;
+  }
+  .meta{
+    font-family:var(--mono);
+    font-size:.8rem;
+    color:var(--ink-soft);
+    margin-top:2rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.5rem;
+  }
+  /* signature: single-particle trajectory, viridis-stroked */
+  .traj{
+    position:absolute;
+    top:0;right:-4%;
+    width:min(56%,640px);
+    height:100%;
+    z-index:1;
+    opacity:.5;
+    pointer-events:none;
+  }
+  .traj path{
+    fill:none;
+    stroke:url(#viridis);
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-dasharray:2600;
+    stroke-dashoffset:2600;
+    animation:draw 3.4s ease-out .3s forwards;
+  }
+  .traj circle{fill:var(--accent)}
+  @keyframes draw{to{stroke-dashoffset:0}}
+
+  /* ---- section headings ---- */
+  h2{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(1.5rem,3.4vw,2.1rem);
+    letter-spacing:-.01em;
+    margin-bottom:1.5rem;
+  }
+  p+p{margin-top:1.1rem}
+
+  /* ---- research areas ---- */
+  .area{
+    padding:1.6rem 0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .area:last-child{border-bottom:none}
+  .area h3{
+    font-family:var(--display);
+    font-weight:500;
+    font-size:1.25rem;
+    margin-bottom:.4rem;
+  }
+  .area .tag{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--accent);
+    letter-spacing:.08em;
+  }
+  .area p{color:var(--ink-soft);font-size:1rem;margin-top:.5rem}
+
+  /* ---- publications ---- */
+  .pub{
+    display:grid;
+    grid-template-columns:5.5rem 1fr;
+    gap:1.25rem;
+    padding:1.4rem 0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .pub:last-child{border-bottom:none}
+  .pub .yr{
+    font-family:var(--mono);
+    font-size:.85rem;
+    color:var(--ink-soft);
+    padding-top:.15rem;
+  }
+  .pub .title{font-weight:600;display:block}
+  .pub .authors{color:var(--ink-soft);font-size:.95rem}
+  .pub .venue{font-style:italic;color:var(--ink-soft);font-size:.95rem}
+  .pub .doi{font-family:var(--mono);font-size:.78rem}
+
+  /* ---- CV / contact buttons ---- */
+  .btn{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:.8rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    border:1px solid var(--ink);
+    padding:.7rem 1.3rem;
+    margin-top:.5rem;
+    transition:background .18s,color .18s;
+  }
+  .btn:hover{background:var(--ink);color:var(--paper);text-decoration:none}
+
+  .links{
+    font-family:var(--mono);
+    font-size:.9rem;
+    display:flex;
+    flex-direction:column;
+    gap:.6rem;
+    margin-top:.5rem;
+  }
+  .links span{color:var(--ink-soft)}
+
+  footer{
+    border-top:1px solid var(--hairline);
+    padding:2.5rem 0 3.5rem;
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--ink-soft);
+    letter-spacing:.04em;
+  }
+
+  /* ---- reveal (additive: content shows even without JS) ---- */
+  .reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+  .js .reveal{opacity:0;transform:translateY(14px)}
+  .js .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:680px){
+    .row{grid-template-columns:1fr;gap:.75rem;padding:2.75rem 0}
+    .rail{padding-top:0}
+    .traj{opacity:.28;width:80%}
+    .pub{grid-template-columns:1fr;gap:.35rem}
+    .pub .yr{padding-top:0}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .traj path{animation:none;stroke-dashoffset:0}
+    .reveal,.js .reveal{transition:none;opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================= HERO ============================= -->
+<header class="hero">
+  <svg class="traj" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="viridis" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"  stop-color="#440154"/>
+        <stop offset="30%" stop-color="#3B528B"/>
+        <stop offset="55%" stop-color="#21908C"/>
+        <stop offset="80%" stop-color="#5DC863"/>
+        <stop offset="100%" stop-color="#FDE725"/>
+      </linearGradient>
+    </defs>
+    <!-- a 2D random walk, evoking a single-particle track -->
+    <path d="M60,540 L78,520 L70,495 L92,486 L110,500 L102,470 L128,458 L120,430 L146,438 L162,410 L150,388 L176,380 L198,396 L188,366 L214,352 L206,324 L232,332 L250,306 L238,282 L266,276 L286,292 L276,262 L302,250 L294,222 L322,214 L340,232 L330,200 L356,186 L344,158 L370,146"/>
+    <circle cx="370" cy="146" r="5"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Research Portfolio</div>
+    <!-- EDIT: your name -->
+    <h1>Your Name</h1>
+    <!-- EDIT: one-line research identity -->
+    <p class="tagline">PhD researcher in soft matter and complex fluids, imaging colloidal dynamics at the nanoscale.</p>
+    <div class="meta">
+      <span>Georgia Institute of Technology</span>
+      <span>Atlanta, GA</span>
+      <span>you@gatech.edu</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================= ABOUT ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">01</span> / About</div>
+  <div class="body-col reveal">
+    <h2>About</h2>
+    <!-- EDIT: 2-3 sentence bio -->
+    <p>I study how colloids and nanomaterials move, assemble, and organize in fluid environments. My work combines liquid-phase transmission electron microscopy with single-particle tracking to resolve dynamics that are difficult to capture by conventional imaging.</p>
+    <p>I am currently a PhD researcher at Georgia Tech, working across soft matter, complex fluids, and active nanomaterials. I am interested in bridging direct nanoscale observation with quantitative models of transport and self-organization.</p>
+  </div>
+</section>
+
+<!-- ============================= RESEARCH ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">02</span> / Research</div>
+  <div class="body-col reveal">
+    <h2>Research</h2>
+
+    <div class="area">
+      <span class="tag">liquid-phase TEM</span>
+      <h3>Imaging colloidal dynamics in liquid</h3>
+      <p>Developing chip supports and imaging workflows to observe nanoparticle behavior in situ, including graphene-based supports and machine-learning segmentation of noisy micrographs.</p>
+    </div>
+
+    <div class="area">
+      <span class="tag">active matter</span>
+      <h3>Janus nanomotor transport</h3>
+      <p>Quantifying polarity-resolved active transport in Pt-PS Janus nanomotors through single-particle tracking, connecting propulsion mechanisms to measurable trajectory statistics.</p>
+    </div>
+
+    <div class="area">
+      <span class="tag">complex fluids</span>
+      <h3>Coacervates and nanorheology</h3>
+      <p>Using functionalized nanoparticle probes to characterize the local mechanics of coacervate and biomolecular condensate systems by passive microrheology.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= PUBLICATIONS ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">03</span> / Publications</div>
+  <div class="body-col reveal">
+    <h2>Publications</h2>
+
+    <!-- EDIT: duplicate a .pub block per paper -->
+    <div class="pub">
+      <div class="yr">2025</div>
+      <div>
+        <span class="title">Paper title goes here, describing the main result.</span>
+        <span class="authors">Your Name, A. Coauthor, B. Coauthor</span><br>
+        <span class="venue">Journal Name</span> ·
+        <a class="doi" href="#">doi:10.0000/xxxxx</a>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="yr">2024</div>
+      <div>
+        <span class="title">A second representative publication title.</span>
+        <span class="authors">C. Coauthor, Your Name, D. Coauthor</span><br>
+        <span class="venue">Journal Name</span> ·
+        <a class="doi" href="#">doi:10.0000/xxxxx</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= CV ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">04</span> / CV</div>
+  <div class="body-col reveal">
+    <h2>Curriculum Vitae</h2>
+    <p>Full publication list, teaching, and technical background.</p>
+    <!-- EDIT: put cv.pdf in the repo, then this link works -->
+    <a class="btn" href="cv.pdf">Download CV (PDF)</a>
+  </div>
+</section>
+
+<!-- ============================= CONTACT ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">05</span> / Contact</div>
+  <div class="body-col reveal">
+    <h2>Contact</h2>
+    <div class="links">
+      <!-- EDIT: fill in your real handles -->
+      <a href="mailto:you@gatech.edu">you@gatech.edu</a>
+      <a href="https://scholar.google.com/">Google Scholar</a>
+      <a href="https://orcid.org/">ORCID</a>
+      <a href="https://github.com/">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <!-- EDIT: your name -->
+  © 2026 Your Name · Built with HTML and hosted on GitHub Pages
+</footer>
+
+<script>
+  // additive enhancement only; page is fully readable without JS
+  document.documentElement.classList.add('js');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
+  },{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
