@@ -8,27 +8,28 @@
 <meta name="description" content="Research portfolio: soft matter, complex fluids, and liquid-phase electron microscopy.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F6F7F5;
-    --ink:#16191C;
-    --ink-soft:#586058;
-    --accent:#147D77;
-    --hairline:#D8DCD6;
-    --display:"Space Grotesk",sans-serif;
-    --body:"Source Serif 4",Georgia,serif;
-    --mono:"JetBrains Mono",monospace;
-    --measure:70ch;
+    --bg:#533F67;
+    --surface:#5E4A73;
+    --text:#F1ECF5;
+    --text-soft:#BCAEC9;
+    --accent:#E4B363;
+    --hairline:#6E5C82;
+    --display:"Spectral",Georgia,serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",monospace;
+    --measure:68ch;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
-    background:var(--paper);
-    color:var(--ink);
+    background:var(--bg);
+    color:var(--text);
     font-family:var(--body);
-    font-size:18px;
-    line-height:1.65;
+    font-size:17px;
+    line-height:1.68;
     -webkit-font-smoothing:antialiased;
   }
   a{color:var(--accent);text-decoration:none}
@@ -54,8 +55,8 @@
     font-size:.72rem;
     letter-spacing:.14em;
     text-transform:uppercase;
-    color:var(--ink-soft);
-    padding-top:.5rem;
+    color:var(--text-soft);
+    padding-top:.55rem;
   }
   .rail .idx{color:var(--accent)}
   .body-col{max-width:var(--measure)}
@@ -75,24 +76,34 @@
     color:var(--accent);
     margin-bottom:1.25rem;
   }
+  /* round headshot, if you choose to add one in the hero */
+  .portrait{
+    width:132px;height:132px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--hairline);
+    margin-bottom:2rem;
+    display:block;
+  }
   h1{
     font-family:var(--display);
-    font-weight:600;
-    font-size:clamp(2.9rem,8vw,5.6rem);
-    line-height:1.02;
-    letter-spacing:-.02em;
+    font-weight:500;
+    font-size:clamp(2.9rem,8vw,5.7rem);
+    line-height:1.04;
+    letter-spacing:-.01em;
   }
   .tagline{
     font-family:var(--body);
+    font-weight:400;
     font-size:clamp(1.1rem,2.4vw,1.4rem);
-    color:var(--ink-soft);
+    color:var(--text-soft);
     margin-top:1.5rem;
     max-width:44ch;
   }
   .meta{
     font-family:var(--mono);
     font-size:.8rem;
-    color:var(--ink-soft);
+    color:var(--text-soft);
     margin-top:2rem;
     display:flex;
     flex-wrap:wrap;
@@ -105,13 +116,14 @@
     width:min(56%,640px);
     height:100%;
     z-index:1;
-    opacity:.5;
+    opacity:.62;
     pointer-events:none;
+    filter:drop-shadow(0 0 6px rgba(0,0,0,.25));
   }
   .traj path{
     fill:none;
     stroke:url(#viridis);
-    stroke-width:2.2;
+    stroke-width:2.4;
     stroke-linecap:round;
     stroke-linejoin:round;
     stroke-dasharray:2600;
@@ -125,11 +137,28 @@
   h2{
     font-family:var(--display);
     font-weight:500;
-    font-size:clamp(1.5rem,3.4vw,2.1rem);
-    letter-spacing:-.01em;
+    font-size:clamp(1.5rem,3.4vw,2.15rem);
+    letter-spacing:-.005em;
     margin-bottom:1.5rem;
   }
   p+p{margin-top:1.1rem}
+
+  /* ---- images: drop this pattern into any section ---- */
+  .figure{margin:1.6rem 0}
+  .figure img{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:4px;
+    border:1px solid var(--hairline);
+  }
+  .figure figcaption{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--text-soft);
+    letter-spacing:.04em;
+    margin-top:.55rem;
+  }
 
   /* ---- research areas ---- */
   .area{
@@ -140,8 +169,8 @@
   .area h3{
     font-family:var(--display);
     font-weight:500;
-    font-size:1.25rem;
-    margin-bottom:.4rem;
+    font-size:1.3rem;
+    margin-bottom:.3rem;
   }
   .area .tag{
     font-family:var(--mono);
@@ -149,42 +178,42 @@
     color:var(--accent);
     letter-spacing:.08em;
   }
-  .area p{color:var(--ink-soft);font-size:1rem;margin-top:.5rem}
+  .area p{color:var(--text-soft);font-size:1rem;margin-top:.5rem}
 
-  /* ---- publications ---- */
-  .pub{
+  /* ---- list rows: publications, talks, press ---- */
+  .item{
     display:grid;
     grid-template-columns:5.5rem 1fr;
     gap:1.25rem;
     padding:1.4rem 0;
     border-bottom:1px solid var(--hairline);
   }
-  .pub:last-child{border-bottom:none}
-  .pub .yr{
+  .item:last-child{border-bottom:none}
+  .item .yr{
     font-family:var(--mono);
     font-size:.85rem;
-    color:var(--ink-soft);
+    color:var(--text-soft);
     padding-top:.15rem;
   }
-  .pub .title{font-weight:600;display:block}
-  .pub .authors{color:var(--ink-soft);font-size:.95rem}
-  .pub .venue{font-style:italic;color:var(--ink-soft);font-size:.95rem}
-  .pub .doi{font-family:var(--mono);font-size:.78rem}
+  .item .title{font-weight:600;display:block}
+  .item .sub{color:var(--text-soft);font-size:.95rem}
+  .item .venue{font-style:italic;color:var(--text-soft);font-size:.95rem}
+  .item .doi{font-family:var(--mono);font-size:.78rem}
 
-  /* ---- CV / contact buttons ---- */
+  /* ---- CV / contact ---- */
   .btn{
     display:inline-block;
     font-family:var(--mono);
     font-size:.8rem;
     letter-spacing:.08em;
     text-transform:uppercase;
-    color:var(--ink);
-    border:1px solid var(--ink);
+    color:var(--text);
+    border:1px solid var(--text);
     padding:.7rem 1.3rem;
     margin-top:.5rem;
     transition:background .18s,color .18s;
   }
-  .btn:hover{background:var(--ink);color:var(--paper);text-decoration:none}
+  .btn:hover{background:var(--text);color:var(--bg);text-decoration:none}
 
   .links{
     font-family:var(--mono);
@@ -194,14 +223,13 @@
     gap:.6rem;
     margin-top:.5rem;
   }
-  .links span{color:var(--ink-soft)}
 
   footer{
     border-top:1px solid var(--hairline);
     padding:2.5rem 0 3.5rem;
     font-family:var(--mono);
     font-size:.72rem;
-    color:var(--ink-soft);
+    color:var(--text-soft);
     letter-spacing:.04em;
   }
 
@@ -213,9 +241,9 @@
   @media (max-width:680px){
     .row{grid-template-columns:1fr;gap:.75rem;padding:2.75rem 0}
     .rail{padding-top:0}
-    .traj{opacity:.28;width:80%}
-    .pub{grid-template-columns:1fr;gap:.35rem}
-    .pub .yr{padding-top:0}
+    .traj{opacity:.34;width:80%}
+    .item{grid-template-columns:1fr;gap:.35rem}
+    .item .yr{padding-top:0}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -238,11 +266,12 @@
         <stop offset="100%" stop-color="#FDE725"/>
       </linearGradient>
     </defs>
-    <!-- a 2D random walk, evoking a single-particle track -->
     <path d="M60,540 L78,520 L70,495 L92,486 L110,500 L102,470 L128,458 L120,430 L146,438 L162,410 L150,388 L176,380 L198,396 L188,366 L214,352 L206,324 L232,332 L250,306 L238,282 L266,276 L286,292 L276,262 L302,250 L294,222 L322,214 L340,232 L330,200 L356,186 L344,158 L370,146"/>
     <circle cx="370" cy="146" r="5"/>
   </svg>
   <div class="wrap hero-inner">
+    <!-- HEADSHOT: remove the comment markers on the next line to show it -->
+    <!-- <img class="portrait" src="images/headshot.jpg" alt="Your Name"> -->
     <div class="eyebrow">Research Portfolio</div>
     <!-- EDIT: your name -->
     <h1>Your Name</h1>
@@ -299,22 +328,22 @@
   <div class="body-col reveal">
     <h2>Publications</h2>
 
-    <!-- EDIT: duplicate a .pub block per paper -->
-    <div class="pub">
+    <!-- EDIT: duplicate an .item block per paper -->
+    <div class="item">
       <div class="yr">2025</div>
       <div>
         <span class="title">Paper title goes here, describing the main result.</span>
-        <span class="authors">Your Name, A. Coauthor, B. Coauthor</span><br>
+        <span class="sub">Your Name, A. Coauthor, B. Coauthor</span><br>
         <span class="venue">Journal Name</span> ·
         <a class="doi" href="#">doi:10.0000/xxxxx</a>
       </div>
     </div>
 
-    <div class="pub">
+    <div class="item">
       <div class="yr">2024</div>
       <div>
         <span class="title">A second representative publication title.</span>
-        <span class="authors">C. Coauthor, Your Name, D. Coauthor</span><br>
+        <span class="sub">C. Coauthor, Your Name, D. Coauthor</span><br>
         <span class="venue">Journal Name</span> ·
         <a class="doi" href="#">doi:10.0000/xxxxx</a>
       </div>
@@ -322,9 +351,59 @@
   </div>
 </section>
 
+<!-- ============================= TALKS ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">04</span> / Talks</div>
+  <div class="body-col reveal">
+    <h2>Talks</h2>
+
+    <!-- EDIT: duplicate an .item block per talk -->
+    <div class="item">
+      <div class="yr">2025</div>
+      <div>
+        <span class="title">Title of your talk or presentation.</span>
+        <span class="sub">Conference or Seminar Name, City · Invited</span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="yr">2024</div>
+      <div>
+        <span class="title">Another talk title.</span>
+        <span class="sub">Meeting Name, City · Contributed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= PRESS ============================= -->
+<section class="row">
+  <div class="rail"><span class="idx">05</span> / Press</div>
+  <div class="body-col reveal">
+    <h2>Press</h2>
+
+    <!-- EDIT: duplicate an .item block per press mention -->
+    <div class="item">
+      <div class="yr">2025</div>
+      <div>
+        <a class="title" href="#">Headline of the article, linked to the source.</a>
+        <span class="sub">Outlet Name</span>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="yr">2024</div>
+      <div>
+        <a class="title" href="#">A second piece of coverage.</a>
+        <span class="sub">Outlet Name</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============================= CV ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">04</span> / CV</div>
+  <div class="rail"><span class="idx">06</span> / CV</div>
   <div class="body-col reveal">
     <h2>Curriculum Vitae</h2>
     <p>Full publication list, teaching, and technical background.</p>
@@ -335,7 +414,7 @@
 
 <!-- ============================= CONTACT ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">05</span> / Contact</div>
+  <div class="rail"><span class="idx">07</span> / Contact</div>
   <div class="body-col reveal">
     <h2>Contact</h2>
     <div class="links">
@@ -354,7 +433,6 @@
 </footer>
 
 <script>
-  // additive enhancement only; page is fully readable without JS
   document.documentElement.classList.add('js');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }});
