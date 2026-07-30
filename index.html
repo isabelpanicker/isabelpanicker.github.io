@@ -15,12 +15,13 @@
     --surface:#5E4A73;
     --text:#F1ECF5;
     --text-soft:#BCAEC9;
-    --accent:#E4B363;
+    --accent:#FFFFFF;
     --hairline:#6E5C82;
     --display:"Spectral",Georgia,serif;
     --body:"IBM Plex Sans",system-ui,sans-serif;
     --mono:"IBM Plex Mono",monospace;
     --measure:68ch;
+    --gutter:clamp(1.25rem,5vw,4rem);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -32,42 +33,25 @@
     line-height:1.68;
     -webkit-font-smoothing:antialiased;
   }
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:underline;text-underline-offset:3px}
+  a{
+    color:var(--accent);
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:3px;
+    text-decoration-color:rgba(241,236,245,.35);
+  }
+  a:hover{text-decoration-color:var(--accent)}
   a:focus-visible,button:focus-visible{
     outline:2px solid var(--accent);
     outline-offset:3px;
     border-radius:2px;
   }
 
-  .wrap{max-width:1100px;margin:0 auto;padding:0 clamp(1.25rem,5vw,4rem)}
-
-  /* ---- shared section grid: mono rail + content ---- */
-  .row{
-    display:grid;
-    grid-template-columns:9rem 1fr;
-    gap:2rem;
-    padding:clamp(3rem,7vw,5.5rem) 0;
-    border-top:1px solid var(--hairline);
-  }
-  .rail{
-    font-family:var(--mono);
-    font-size:.72rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--text-soft);
-    padding-top:.55rem;
-  }
-  .rail .idx{color:var(--accent)}
-  .body-col{max-width:var(--measure)}
+  /* one shared centered column for every block on the page */
+  .wrap{max-width:1100px;margin:0 auto;padding:0 var(--gutter)}
 
   /* ---- hero ---- */
-  .hero{position:relative;overflow:hidden}
-  .hero-inner{
-    padding:clamp(4rem,12vw,8rem) 0 clamp(3rem,7vw,5rem);
-    position:relative;
-    z-index:2;
-  }
+  .hero-inner{padding:clamp(4rem,12vw,8rem) 0 clamp(3rem,7vw,5rem)}
   .eyebrow{
     font-family:var(--mono);
     font-size:.75rem;
@@ -109,31 +93,22 @@
     flex-wrap:wrap;
     gap:1.5rem;
   }
-  /* signature: single-particle trajectory, viridis-stroked */
-  .traj{
-    position:absolute;
-    top:0;right:-4%;
-    width:min(56%,640px);
-    height:100%;
-    z-index:1;
-    opacity:.62;
-    pointer-events:none;
-    filter:drop-shadow(0 0 6px rgba(0,0,0,.25));
-  }
-  .traj path{
-    fill:none;
-    stroke:url(#viridis);
-    stroke-width:2.4;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    stroke-dasharray:2600;
-    stroke-dashoffset:2600;
-    animation:draw 3.4s ease-out .3s forwards;
-  }
-  .traj circle{fill:var(--accent)}
-  @keyframes draw{to{stroke-dashoffset:0}}
 
-  /* ---- section headings ---- */
+  /* ---- sections: same left edge as the hero heading ---- */
+  .row{
+    max-width:1100px;
+    margin:0 auto;
+    padding:clamp(3rem,7vw,5rem) var(--gutter);
+    border-top:1px solid var(--hairline);
+  }
+  .body-col{max-width:var(--measure)}
+  .kicker{
+    font-family:var(--mono);
+    font-size:.75rem;
+    letter-spacing:.16em;
+    color:var(--text-soft);
+    margin-bottom:1rem;
+  }
   h2{
     font-family:var(--display);
     font-weight:500;
@@ -161,10 +136,7 @@
   }
 
   /* ---- research areas ---- */
-  .area{
-    padding:1.6rem 0;
-    border-bottom:1px solid var(--hairline);
-  }
+  .area{padding:1.6rem 0;border-bottom:1px solid var(--hairline)}
   .area:last-child{border-bottom:none}
   .area h3{
     font-family:var(--display);
@@ -175,7 +147,7 @@
   .area .tag{
     font-family:var(--mono);
     font-size:.72rem;
-    color:var(--accent);
+    color:var(--text-soft);
     letter-spacing:.08em;
   }
   .area p{color:var(--text-soft);font-size:1rem;margin-top:.5rem}
@@ -211,9 +183,10 @@
     border:1px solid var(--text);
     padding:.7rem 1.3rem;
     margin-top:.5rem;
+    text-decoration:none;
     transition:background .18s,color .18s;
   }
-  .btn:hover{background:var(--text);color:var(--bg);text-decoration:none}
+  .btn:hover{background:var(--text);color:var(--bg)}
 
   .links{
     font-family:var(--mono);
@@ -239,15 +212,11 @@
   .js .reveal.in{opacity:1;transform:none}
 
   @media (max-width:680px){
-    .row{grid-template-columns:1fr;gap:.75rem;padding:2.75rem 0}
-    .rail{padding-top:0}
-    .traj{opacity:.34;width:80%}
     .item{grid-template-columns:1fr;gap:.35rem}
     .item .yr{padding-top:0}
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
-    .traj path{animation:none;stroke-dashoffset:0}
     .reveal,.js .reveal{transition:none;opacity:1;transform:none}
   }
 </style>
@@ -255,40 +224,25 @@
 <body>
 
 <!-- ============================= HERO ============================= -->
-<header class="hero">
-  <svg class="traj" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <defs>
-      <linearGradient id="viridis" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%"  stop-color="#440154"/>
-        <stop offset="30%" stop-color="#3B528B"/>
-        <stop offset="55%" stop-color="#21908C"/>
-        <stop offset="80%" stop-color="#5DC863"/>
-        <stop offset="100%" stop-color="#FDE725"/>
-      </linearGradient>
-    </defs>
-    <path d="M60,540 L78,520 L70,495 L92,486 L110,500 L102,470 L128,458 L120,430 L146,438 L162,410 L150,388 L176,380 L198,396 L188,366 L214,352 L206,324 L232,332 L250,306 L238,282 L266,276 L286,292 L276,262 L302,250 L294,222 L322,214 L340,232 L330,200 L356,186 L344,158 L370,146"/>
-    <circle cx="370" cy="146" r="5"/>
-  </svg>
-  <div class="wrap hero-inner">
-    <!-- HEADSHOT: remove the comment markers on the next line to show it -->
-    <!-- <img class="portrait" src="images/headshot.jpg" alt="Your Name"> -->
-    <div class="eyebrow">Research Portfolio</div>
-    <!-- EDIT: your name -->
-    <h1>Your Name</h1>
-    <!-- EDIT: one-line research identity -->
-    <p class="tagline">PhD researcher in soft matter and complex fluids, imaging colloidal dynamics at the nanoscale.</p>
-    <div class="meta">
-      <span>Georgia Institute of Technology</span>
-      <span>Atlanta, GA</span>
-      <span>you@gatech.edu</span>
-    </div>
+<header class="wrap hero-inner">
+  <!-- HEADSHOT: remove the comment markers on the next line to show it -->
+  <!-- <img class="portrait" src="images/headshot.jpg" alt="Your Name"> -->
+  <div class="eyebrow">Research Portfolio</div>
+  <!-- EDIT: your name -->
+  <h1>Your Name</h1>
+  <!-- EDIT: one-line research identity -->
+  <p class="tagline">PhD researcher in soft matter and complex fluids, imaging colloidal dynamics at the nanoscale.</p>
+  <div class="meta">
+    <span>Georgia Institute of Technology</span>
+    <span>Atlanta, GA</span>
+    <span>you@gatech.edu</span>
   </div>
 </header>
 
 <!-- ============================= ABOUT ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">01</span> / About</div>
   <div class="body-col reveal">
+    <div class="kicker">01</div>
     <h2>About</h2>
     <!-- EDIT: 2-3 sentence bio -->
     <p>I study how colloids and nanomaterials move, assemble, and organize in fluid environments. My work combines liquid-phase transmission electron microscopy with single-particle tracking to resolve dynamics that are difficult to capture by conventional imaging.</p>
@@ -298,8 +252,8 @@
 
 <!-- ============================= RESEARCH ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">02</span> / Research</div>
   <div class="body-col reveal">
+    <div class="kicker">02</div>
     <h2>Research</h2>
 
     <div class="area">
@@ -324,8 +278,8 @@
 
 <!-- ============================= PUBLICATIONS ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">03</span> / Publications</div>
   <div class="body-col reveal">
+    <div class="kicker">03</div>
     <h2>Publications</h2>
 
     <!-- EDIT: duplicate an .item block per paper -->
@@ -353,8 +307,8 @@
 
 <!-- ============================= TALKS ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">04</span> / Talks</div>
   <div class="body-col reveal">
+    <div class="kicker">04</div>
     <h2>Talks</h2>
 
     <!-- EDIT: duplicate an .item block per talk -->
@@ -378,8 +332,8 @@
 
 <!-- ============================= PRESS ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">05</span> / Press</div>
   <div class="body-col reveal">
+    <div class="kicker">05</div>
     <h2>Press</h2>
 
     <!-- EDIT: duplicate an .item block per press mention -->
@@ -403,8 +357,8 @@
 
 <!-- ============================= CV ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">06</span> / CV</div>
   <div class="body-col reveal">
+    <div class="kicker">06</div>
     <h2>Curriculum Vitae</h2>
     <p>Full publication list, teaching, and technical background.</p>
     <!-- EDIT: put cv.pdf in the repo, then this link works -->
@@ -414,8 +368,8 @@
 
 <!-- ============================= CONTACT ============================= -->
 <section class="row">
-  <div class="rail"><span class="idx">07</span> / Contact</div>
   <div class="body-col reveal">
+    <div class="kicker">07</div>
     <h2>Contact</h2>
     <div class="links">
       <!-- EDIT: fill in your real handles -->
